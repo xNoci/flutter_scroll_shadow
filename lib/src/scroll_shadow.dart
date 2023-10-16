@@ -15,6 +15,7 @@ class ScrollShadow extends StatefulWidget {
     this.fadeInCurve = Curves.easeIn,
     this.fadeOutCurve = Curves.easeOut,
     this.ignoreInteraction = true,
+    this.disabledAxis,
   });
 
   /// [color] determines rendered color of shadows.
@@ -53,6 +54,9 @@ class ScrollShadow extends StatefulWidget {
   ///
   /// Default: `true`
   final bool ignoreInteraction;
+
+  /// Set a axis which should not be rendered
+  final Axis? disabledAxis;
 
   @override
   State<ScrollShadow> createState() => _ScrollShadowState();
@@ -185,6 +189,7 @@ class _ScrollShadowState extends State<ScrollShadow> {
   }
 
   bool _handleNewMetrics(final ScrollMetrics metrics) {
+    if (metrics.axis == widget.disabledAxis) return false;
     if (_axis != metrics.axis) {
       setState(() => _axis = metrics.axis);
     }
